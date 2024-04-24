@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "conversational-ai-course"
+version = "0.1.0"
+description = ""
+authors = ["brtbrr <ZagorulkoOA@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sentence-transformers = "^2.7.0"
+openai = "0.28"
+langchain = "^0.1.16"
+langchain-community = "^0.0.34"
+natasha = "^1.6.0"
+chromadb = "^0.4.24"
+aiogram = "^3.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
