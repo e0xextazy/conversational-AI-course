@@ -14,6 +14,7 @@ emb = NewsEmbedding()
 morph_tagger = NewsMorphTagger(emb)
 ner_tagger = NewsNERTagger(emb)
 
+
 def get_entities(user_input):
     text = copy.deepcopy(user_input)
 
@@ -26,5 +27,5 @@ def get_entities(user_input):
     for span in doc.spans:
         span.normalize(morph_vocab)
         result_spans.append(span)
-        
+
     return result_spans
