@@ -1,0 +1,8 @@
+.git
+.gitignore
+Dockerfile
+LICENSE
+README.md
+databases
+__pycache__
+venv

@@ -46,6 +46,8 @@ async def clear_history(message: types.Message):
 @dp.message(Command("get_stat"))
 async def get_stat(message: types.Message):
     chat_history = messages_db.get_all_data(message.from_user.id)
+    if len(chat_history) == 0:
+        await message.answer("Ваша история пуста!")
     chat_agg = aggregate_stat(chat_history)
 
     await message.answer(repr(chat_agg))
