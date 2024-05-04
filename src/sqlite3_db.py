@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from pathlib import Path
+from typing import Dict, Any, List, Tuple
 
 
 class MessageLogger():
@@ -18,13 +19,19 @@ class MessageLogger():
     def close(self) -> None:
         self.con.close()
 
-    def write_message(self, message) -> None:
+    def write_message(self, message: Dict[str, Any]) -> None:
         self.cur.execute(
             f"INSERT INTO messages(user_id, message, response, tox_score) VALUES ({message['user_id']}, '{message['message']}', '{message['response']}', {message['tox_score']})")
         self.con.commit()
 
-    def get_last_messages(self, user_id: int, n: int = 5):
+    def get_last_messages(self, user_id: int, n: int = 5) -> List[Tuple[str, str]]:
         res = self.cur.execute(
             f"SELECT message, response FROM messages where user_id={user_id} Order By datetime DESC LIMIT {n}")
+
+        return res.fetchall()
+
+    def get_all_data(self, user_id: int) -> List[Tuple]:
+        res = self.cur.execute(
+            f"SELECT * FROM messages where user_id={user_id}")
 
         return res.fetchall()

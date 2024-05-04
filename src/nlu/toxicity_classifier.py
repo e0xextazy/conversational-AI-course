@@ -9,7 +9,7 @@ model_toxic = AutoModelForSequenceClassification.from_pretrained(model_path)
 model_toxic = model_toxic.to(device)
 
 
-def text2toxicity(text, aggregate=True):
+def text2toxicity(text: str, aggregate: bool = True) -> float:
     """ Calculate toxicity of a text (if aggregate=True) or a vector of toxicity aspects (if aggregate=False)"""
     with torch.no_grad():
         inputs = tokenizer_toxic(

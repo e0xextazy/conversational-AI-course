@@ -6,11 +6,10 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.filters.command import Command
 
-from langchain_core.messages import HumanMessage
-
 from nlu.toxicity_classifier import text2toxicity
 from rag import load_rag
 from sqlite3_db import MessageLogger
+from utils import create_kb, convert2langchain_format, aggregate_stat
 
 
 rag_chain = load_rag()
@@ -20,24 +19,6 @@ cur_context = collections.defaultdict(int)
 bot = Bot(token=os.getenv("TGBOT_TOKEN"))
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
-
-
-def create_kb():
-    kb = [[types.KeyboardButton(text="/clear_history")], [types.KeyboardButton(
-        text="/help"), types.KeyboardButton(text="/get_stat")]]
-    keyboard = types.ReplyKeyboardMarkup(
-        keyboard=kb,
-        resize_keyboard=True,
-    )
-
-    return keyboard
-
-
-def convert2langchain_format(messages):
-    res = []
-    for (h_m, ai_m) in messages:
-        res += [HumanMessage(h_m), ai_m]
-    return res
 
 
 @dp.message(Command("start"))
@@ -64,7 +45,10 @@ async def clear_history(message: types.Message):
 
 @dp.message(Command("get_stat"))
 async def get_stat(message: types.Message):
-    await message.answer("Statistic")
+    chat_history = messages_db.get_all_data(message.from_user.id)
+    chat_agg = aggregate_stat(chat_history)
+
+    await message.answer(repr(chat_agg))
 
 
 @dp.message()
