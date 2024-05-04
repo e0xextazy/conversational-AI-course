@@ -41,13 +41,13 @@
 
 # Example
 - Пример свободного общения
-<p align="center" width="100%">
-    <img width="65%" src="assets/qa.jpg">
+<p align="left" width="100%">
+    <img width="30%" src="assets/qa.jpg">
 </p>
 
 - Пример вызовов команд
-<p align="center" width="100%">
-    <img width="65%" src="assets/command.jpg">
+<p align="left" width="100%">
+    <img width="30%" src="assets/command.jpg">
 </p>
 
 # Team
