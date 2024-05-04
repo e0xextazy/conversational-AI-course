@@ -8,11 +8,12 @@ from reader import get_data
 from retriever import create_retriever
 
 
-def load_rag():
+def load_rag(random_seed: int = 42):
     txt_docs = get_data('data_txt')
     docs = [Document(page_content=txt_doc) for txt_doc in txt_docs]
     retriever = create_retriever(docs)
-    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo-0125")
+    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo-0125",
+                     model_kwargs={"seed": random_seed})
 
     contextualize_q_system_prompt = """Учитывая историю чатов и последний вопрос пользователя \
     который может ссылаться на контекст в истории чата, сформулируйте отдельный вопрос \
